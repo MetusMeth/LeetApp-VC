@@ -1,0 +1,62 @@
+{
+  "name": "leethotelvc",
+  "productName": "Leet Türkiye",
+  "debug": false,
+  "version": "1.0.2",
+  "clientId": 983112518448310,
+  "main": "app.js",
+  "description": "Leet Türkiye, keyifli vakit geçirmenin tek yolu. Harika insanların olduğu muhteşem topluluk!",
+  "homepage": "https://www.leet.vc",
+  "author": {
+    "name": "Asteroid Games",
+    "email": "info@leet.nl"
+  },
+  "scripts": {
+    "start": "electron .",
+    "publish": "electron-builder --win -p always",
+    "build": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "11.1.0",
+    "electron-builder": "22.9.1"
+  },
+  "dependencies": {
+    "electron-updater": "4.3.5"
+  },
+  "build": {
+    "appId": "vc.leet.app",
+    "extraResources": [
+      "./flash/**"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "metusmeth",
+        "repo": "leetapp-vc"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "uninstallDisplayName": "Leet Hotel",
+      "oneClick": true,
+      "perMachine": false,
+      "artifactName": "Leet-${version}.${ext}"
+    }
+  }
+}

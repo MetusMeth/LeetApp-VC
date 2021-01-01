@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="assets/css/app.min.css">
+		<script src="assets/js/fontawesome.js"></script>
+	</head>
+<body>
+	<div id="alert" class="alert">
+		<div class="box">
+			<div class="title">Emin misiniz?</div>
+			<div id="description" class="description">Önbelleği temizlerken Leet uygulamasını yeniden başlatacağız.</div>
+			<div class="btns">
+				<div id="cancel" class="button" style="float:left;background: #ed1c24;">
+					<div class="alpha"></div>
+					İptal etmek
+				</div>
+
+				<div id="confirm" class="button">
+					<div class="alpha"></div>
+					Onaylamak
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<header id="hotel-header" class="hotel-header" style="display: none">
+		<nav class="navigation">
+			<ul class="list">
+				<li id="home" class="tab">
+					<img src="assets/img/home.gif" draggable="false" style="vertical-align: -5.5px; margin-right: 4px;">
+					<span>Home</span>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="buttons">
+			<button id="cache">
+				<i class="fas fa-trash"></i>
+			</button>
+
+			<button id="zoomOut">
+				<i class="fas fa-search-minus"></i>
+			</button>
+
+			<button id="zoomIn">
+				<i class="fas fa-search-plus"></i>
+			</button>
+
+			<button id="reload">
+				<i id="reload-icon" class="fas fa-sync-alt"></i>
+			</button>
+
+			<button id="fullscreen">
+				<i class="fas fa-expand-arrows-alt"></i>
+			</button>
+		</div>
+	</header>
+
+	<header id="web-header" class="web-header">
+		<div id="webFullscreen" class="button">
+			<div class="icon screen"></div>
+			<div class="tooltip">
+				<div class="arrow"></div>
+				Tam ekran
+			</div>
+		</div>
+
+		<div id="webCache" class="button">
+			<div class="icon cache"></div>
+			<div class="tooltip">
+				<div class="arrow"></div>
+				Önbelleği boşalt
+			</div>
+		</div>
+
+		<div id="webZoomOut" class="button">
+			<div class="icon out"></div>
+			<div class="tooltip">
+				<div class="arrow"></div>
+				Yakınlaştır -1%
+			</div>
+		</div>
+
+		<div id="webZoomIn" class="button">
+			<div class="icon in"></div>
+			<div class="tooltip">
+				<div class="arrow"></div>
+				Yakınlaştır +1%
+			</div>
+		</div>
+
+		<div id="webReload" class="button">
+			<div class="icon reload"></div>
+			<div class="tooltip">
+				<div class="arrow"></div>
+				Sayfayı yenile
+			</div>
+		</div>
+	</header>
+
+	<div id="messages"></div>
+
+	<iframe id="home-frame"></iframe>
+
+	<script>
+		const package = require('./package');
+
+		var iframe = document.getElementById('home-frame');
+		iframe.setAttribute('src', package.homepage + '/?app=true');
+		iframe.setAttribute('tabindex', 0);
+
+		const {ipcRenderer} = require('electron');
+		const updater = document.getElementById("updater");
+		const progression = document.getElementById("progression");
+		const version = document.getElementById("version");
+
+		ipcRenderer.on("version", (event, data) => {
+			version.innerHTML = data;
+		});
+
+		ipcRenderer.on("checking-for-update", (event, data) => {
+			updater.style.display = "block";
+		});
+
+		ipcRenderer.on("update-not-available", (event, data) => {
+			updater.style.display = "none";
+			updater.innerHTML = "";
+		});
+
+		ipcRenderer.on("download-progress", (event, data) => {
+			progression.innerHTML = "güncelleme ... " + Math.round(data['percent']) + "%";
+		});
+
+		const zoomIn = document.getElementById("zoomIn");
+		const zoomOut = document.getElementById("zoomOut");
+		const reload = document.getElementById("reload");
+		const screen = document.getElementById("fullscreen");
+
+		const webZoomIn = document.getElementById("webZoomIn");
+		const webZoomOut = document.getElementById("webZoomOut");
+		const webReload = document.getElementById("webReload");
+		const webScreen = document.getElementById("webFullscreen");
+
+		let webHeader = document.getElementById("web-header");
+		let hotelHeader = document.getElementById("hotel-header");
+		let navigation = document.getElementById("navigation");
+		let hotelFrame = document.getElementById("hotel-frame");
+		let homeFrame = document.getElementById("home-frame");
+		let homeButton = document.getElementById("home");
+
+		function enterFacebook() {
+			ipcRenderer.send("facebook", "");
+		}
+
+		function redirectFacebook() {
+			homeFrame.src = package.homepage + "/facebook";
+		}
+
+		function enterHotel() {
+			if (!hotelFrame) {
+				hotelFrame = document.createElement("iframe");
+				hotelFrame.id = "hotel-frame";
+				hotelFrame.src = package.homepage + "/hotel";
+				document.body.appendChild(hotelFrame);
+			}
+
+			showHotelScreen();
+		}
+
+		function showHomeScreen() {
+			hotelFrame.tabIndex = -1;
+			homeFrame.tabIndex = 0;
+			hotelFrame.style.visibility = "hidden";
+			homeFrame.style.visibility = "visible";
+			hotelHeader.style.display = "none";
+			webHeader.style.display = "inline-block";
+		}
+
+		function showHotelScreen() {
+			hotelFrame.tabIndex = 0;
+			homeFrame.tabIndex = -1;
+			hotelFrame.style.visibility = "visible";
+			homeFrame.style.visibility = "hidden";
+			hotelHeader.style.display = "inline-block";
+			homeButton.classList.add("notransition");
+			homeButton.offsetHeight;
+			homeButton.classList.remove("notransition");
+			webHeader.style.display = "none";
+		}
+
+		homeButton.addEventListener('click', () => {
+			if (!hotelFrame) {
+				homeFrame.src = package.homepage + "/?app=true";
+				return;
+			}
+
+			showHomeScreen();
+		});
+
+		zoomOut.addEventListener('click', () => {
+			ipcRenderer.send("zoomOut", "");
+		});
+
+		zoomIn.addEventListener('click', () => {
+			ipcRenderer.send("zoomIn", "");
+		});
+
+		screen.addEventListener('click', () => {
+			ipcRenderer.send("fullscreen", "");
+		});
+
+		webZoomOut.addEventListener('click', () => {
+			ipcRenderer.send("zoomOut", "");
+		});
+
+		webZoomIn.addEventListener('click', () => {
+			ipcRenderer.send("zoomIn", "");
+		});
+
+		webScreen.addEventListener('click', () => {
+			ipcRenderer.send("fullscreen", "");
+		});
+
+		reload.addEventListener('click', () => {
+			document.getElementById("reload-icon").classList.add("fa-spin");
+			setTimeout(() => {
+				document.getElementById("reload-icon").classList.remove("fa-spin");
+			}, 1800);
+			const activeFrame = document.querySelector('[tabindex = "0"]');
+       	 	activeFrame.src = activeFrame.src;
+		});
+
+		webReload.addEventListener('click', () => {
+			const activeFrame = document.querySelector('[tabindex = "0"]');
+       	 	activeFrame.src = activeFrame.src;
+		});
+
+		const alert = document.getElementById("alert");
+		const cancel = document.getElementById("cancel");
+		const confirm = document.getElementById("confirm");
+		const description = document.getElementById("description");
+		cancel.onclick = () => {
+			alert.style.visibility = "hidden";
+		};
+
+		const cache = document.getElementById("cache");
+		const webCache = document.getElementById("webCache");
+		cache.addEventListener('click', () => {
+			alert.style.visibility = "visible";
+			confirm.onclick = () => {
+				ipcRenderer.send("cache", "");
+			};
+		});
+
+		webCache.addEventListener('click', () => {
+			alert.style.visibility = "visible";
+			confirm.onclick = () => {
+				ipcRenderer.send("cache", "");
+			};
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family:Rubik,sans-serif;
+}
+
+.loading-container {
+    color:#fff;
+    font-family:poppins,Arial,sans-serif;
+    text-shadow:0 1px 0 rgba(0,0,0,.05);
+    text-align:center;
+    font-size:22px;
+    font-weight:500;
+}
+
+.loading-container #loading-background {
+    background:linear-gradient(-45deg,#EE7752,#E73C7E,#23A6D5,#22d2d5);
+    background-size:200% 200%;
+}
+
+.loading-container,.loading-container #loading-background,.loading-container .loading-content {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:650;
+}
+
+.loading-container .loading-content {
+    width:330px;
+    height:165px;
+    margin:auto;
+}
+
+.loading-container .loading-content a {
+    color:#fff;
+}
+
+.page-loading {
+    background-color:rgba(255,255,255,.6);
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:1999;
+    display:none;
+}
+
+.version {
+	text-decoration: underline;
+    font-size: 10px
+}
+
+.updater {
+    position: fixed;
+    height: 100%;
+    display: block;
+    width: 100%;
+    z-index: 999999;
+}
+
+iframe {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.hotel-header {
+    border: none;
+    background: 0 0;
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 15px;
+    pointer-events: none;
+    justify-content: normal
+}
+
+.hotel-header .navigation{
+    float:left;
+    margin-top:11.5px;
+    margin-left:15px
+}
+
+.hotel-header .list {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.hotel-header .tab {
+    display:inline-block;
+    padding:2px 5px;
+    margin-right:5px;
+    background:#ffb900;
+    border:2px solid #ffea00;
+    border-radius:5px;
+    font-size:13px;
+    box-shadow:4px 4px 5px -1px rgba(0,0,0,.1);
+    cursor:pointer;
+    transition:.3s;
+    height:22px;
+    width:16px;
+    white-space:nowrap;
+    overflow:hidden;
+    border-radius:0;
+    padding:2px 9px 2px 2px;
+    border-left:#ffb900;
+    pointer-events:auto
+}
+
+.hotel-header .tab:after,.tab:before {
+    content:"\A";
+    border-style:solid;
+    position:absolute;
+    transition:.3s
+}
+
+.hotel-header .tab:before {
+    border-width:15px 15px 15px 0;
+    border-color:transparent #ffea00 transparent transparent;
+    top:12px;
+    left:0
+}
+
+.hotel-header .tab:hover:before {
+    border-color:transparent #f79426 transparent transparent
+}
+
+.hotel-header .tab:after {
+    border-width:13px 13px 13px 0;
+    border-color:transparent #ffb900 transparent transparent;
+    top:14px;
+    left:3px
+}
+
+.hotel-header .tab:hover:after {
+    border-color:transparent #ffd400 transparent transparent
+}
+
+.hotel-header .tab:hover {
+    border-left:#ffd400;
+    width:60px
+}
+
+.hotel-header .buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
+    height: 30px;
+    margin-top: 11.5px;
+    margin-right: 15px
+}
+
+.hotel-header .buttons button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: #ffb900;
+    border: 2px solid #ffea00;
+    border-radius: 5px;
+    color: #232323;
+    font-size: 14px;
+    padding-top: 4px;
+    box-shadow: 4px 4px 5px -1px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    outline: 0;
+    transition: .3s;
+    pointer-events: auto
+}
+
+.button:hover {
+    background:#ffd400
+}
+
+.fullscreen:active {
+    margin-top:5px
+}
+
+.notransition {
+    -webkit-transition:none!important;
+    -moz-transition:none!important;
+    -o-transition:none!important;
+    transition:none!important
+}
+
+.alert {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert .box {
+    height: 280px;
+    position: relative;
+    background: white;
+    padding: 15px;
+    width: 410px;
+    border-radius: 15px;
+}
+
+.alert .box .title {
+    font-size: 40px;
+}
+
+.alert .box .description {
+    font-size: 20px;
+}
+
+.alert .box .btns {
+    position: absolute;
+    width: calc(100% - 30px);
+    bottom: 15px
+}
+
+.alert .box .btns .button {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    display: flex;
+    color: white;
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #4c4c4c;
+    border-radius: 18px;
+    height: 56px;
+    width: calc(50% - 10px);
+    background: #32bf1a;
+}
+
+.alert .box .btns .button:hover {
+    opacity: 0.8;
+}
+
+.alert .box .btns .button .alpha {
+    position: absolute;
+    left: 8px;
+    top: 5px;
+    height: 8px;
+    border-radius: 5px;
+    width: calc(100% - 16px);
+    background: #ffffff69;
+}
+
+.web-header {
+    z-index: 99999;
+    margin-top: 20px;
+    position: fixed;
+    background: rgba(58, 56, 50, 0.9);
+    right: 0;
+    bottom: 100px;
+    width: 50px;
+    border-radius: 10px 0 0 10px;
+}
+
+.web-header .button {
+    position: relative;
+    z-index: 9999;
+    height: 36px;
+    left: 8px;
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 4px;
+    width: 36px;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.web-header .button:hover .tooltip {
+    display: block;
+}
+
+.web-header .button .tooltip {
+    position: absolute;
+    background: white;
+    display: none;
+    padding: 8px 10px;
+    text-align: center;
+    right: 60px;
+    width: 100px;
+    box-shadow: 0 0 6px #0000006e;
+    border-radius: 10px;
+}
+
+.web-header .button .tooltip .arrow {
+    width: 0;
+    right: -6px;
+    top: 12px;
+    height: 0;
+    position: absolute;
+    border-style: solid;
+    border-width: 5px 0 5px 6px;
+    border-color: transparent transparent transparent #ffffff;
+}
+
+.web-header .button .icon {
+    height: 25px;
+    width: 25px;
+}
+
+.web-header .button .out {
+    background: url('../img/out.png');
+}
+
+.web-header .button .screen {
+    background: url('../img/screen.png');
+}
+
+.web-header .button .cache {
+    background: url('../img/cache.png');
+}
+
+.web-header .button .reload {
+    background: url('../img/reload.png');
+}
+
+.web-header .button .in {
+    background: url('../img/in.png');
+}
+
+.web-header .button:hover {
+    background: #00000073;
+}
