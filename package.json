@@ -53,7 +53,7 @@
     "nsis": {
       "installerIcon": "icon.ico",
       "uninstallerIcon": "icon.ico",
-      "uninstallDisplayName": "Leet Hotel",
+      "uninstallDisplayName": "Leet Türkiye",
       "oneClick": true,
       "perMachine": false,
       "artifactName": "Leet-${version}.${ext}"
